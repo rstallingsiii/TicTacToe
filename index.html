@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicTacToe</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script type="text/javascript" href="script.js" ></script>
+    <script type="text/javascript" src="script.js" defer></script>
 </head>
 
 <body>
     <section>
         <h1 class="game--title">Tic Tac Toe</h1>
-        <div class="game--container">
+        <section class="game--container">
             <div data-cell-index="0" class="cell"></div>
             <div data-cell-index="1" class="cell"></div>
             <div data-cell-index="2" class="cell"></div>
@@ -23,9 +23,10 @@
             <div data-cell-index="6" class="cell"></div>
             <div data-cell-index="7" class="cell"></div>
             <div data-cell-index="8" class="cell"></div>
-        </div>
+        </section>
         <h2 class="game--status"></h2>
         <button class="game--restart">Restart Game</button>
     </section>
+    
 </body>
 </html>
