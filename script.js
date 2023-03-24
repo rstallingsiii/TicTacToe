@@ -6,8 +6,7 @@
     const statusDisplay = document.querySelector('.game--status');
     let gameActive = true;
     let currentPlayer = "X";
-    let gameState = ["", "", "", "", "", "", "", "", ""];
-    const drawMessage = 'Game ended in a draw!';
+    let gameState = [null, null, null, null, null, null, null, null, null];
     const winningConditions = [
         [0, 1, 2],
         [3, 4, 5],
@@ -20,6 +19,7 @@
     ];
 
     const winningMessage = () => `Player ${currentPlayer} has won!`;
+    const drawMessage = () => 'Game ended in a draw!';
     const currentPlayerTurn = () => `It's ${currentPlayer}'s turn`;
             
     /*
@@ -40,6 +40,8 @@
         statusDisplay.textContent = currentPlayerTurn();
     }
 
+   
+
     function handleResultValidation() {
         let roundWon = false;
         for (let i = 0; i <= 7; i++) {
@@ -47,40 +49,32 @@
             let a = gameState[winCondition[0]];
             let b = gameState[winCondition[1]];
             let c = gameState[winCondition[2]];
-        
-            if (a === '' || b === '' || c === '') {
+    
+            if (a === null || b === null || c === null) {
                 continue;
             }
             if (a === b && b === c) {
                 roundWon = true;
-                break
+                break;
             }
         }
-
+    
+        let roundDraw = !roundWon && !gameState.includes(null);
         if (roundWon) {
             statusDisplay.textContent = winningMessage();
             gameActive = false;
             return;
         }
-
-        /* 
-        We will check weather there are any values in our game state array 
-        that are still not populated with a player sign
-        */
-        let roundDraw = !gameState.includes("");
+    
         if (roundDraw) {
             statusDisplay.textContent = drawMessage();
             gameActive = false;
             return;
         }
-
-        /*
-        If we get to here we know that the no one won the game yet, 
-        and that there are still moves to be played, so we continue by changing the current player.
-        */
+    
         handlePlayerChange();
-
     }
+    
 
     function handleCellClick(clickedCellEvent) {
         /*
@@ -99,7 +93,7 @@
         Next up we need to check whether the call has already been played, 
         or if the game is paused. If either of those is true we will simply ignore the click.
         */
-        if (gameState[clickedCellIndex] !== "" || !gameActive) {
+        if (gameState[clickedCellIndex] !== null || !gameActive) {
         return;
         }
 
@@ -114,11 +108,12 @@
     function handleRestartgame() {
         gameActive = true;
         currentPlayer = "X";
-        gameState = ["", "", "", "", "", "", "", "", ""];
+        gameState = [null, null, null, null, null, null, null, null, null];
         statusDisplay.textContent = currentPlayerTurn();
-        document.querySelectorAll('.cell').forEach(cell => cell.textContent = "");
+        document.querySelectorAll('.cell').forEach(cell => cell.textContent = null);
     }
 
     statusDisplay.textContent = currentPlayerTurn();
     document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', handleCellClick));
     document.querySelector('.game--restart').addEventListener('click', handleRestartgame)
+    document.querySelector('.game--ragequit').addEventListener('click', handleRestartgame)
