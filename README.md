@@ -6,4 +6,4 @@ Future revisions to the game will include:
 
     - Player name input
     - Background and font style updates
-    - Game timer
+   
