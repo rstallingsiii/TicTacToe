@@ -6,6 +6,10 @@
     const statusDisplay = document.querySelector('.game--status');
     let gameActive = true;
     let currentPlayer = "X";
+    const timer = document.getElementById("timer");
+    let timerInterval;
+    let timerValue = 0;    
+    
     let gameState = [null, null, null, null, null, null, null, null, null];
     const winningConditions = [
         [0, 1, 2],
@@ -21,7 +25,22 @@
     const winningMessage = () => `Player ${currentPlayer} has won!`;
     const drawMessage = () => 'Game ended in a draw!';
     const currentPlayerTurn = () => `It's ${currentPlayer}'s turn`;
-            
+          
+    
+    function startTimer() {
+        
+        timerInterval = setInterval(function() {
+          timerValue++;
+          timer.textContent = timerValue;
+        }, 1000);
+      }
+  
+      function resetTimer() {
+        clearInterval(timerInterval);
+        timerValue = 0;
+        timer.textContent = timerValue;
+      }
+    
     /*
     We set the initial message to let the players know whose turn it is
     */
@@ -111,8 +130,10 @@
         gameState = [null, null, null, null, null, null, null, null, null];
         statusDisplay.textContent = currentPlayerTurn();
         document.querySelectorAll('.cell').forEach(cell => cell.textContent = null);
+        resetTimer();
     }
 
+    startTimer();
     statusDisplay.textContent = currentPlayerTurn();
     document.querySelectorAll('.cell').forEach(cell => cell.addEventListener('click', handleCellClick));
     document.querySelector('.game--restart').addEventListener('click', handleRestartgame)
